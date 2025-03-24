@@ -1,0 +1,69 @@
+import time
+
+# Functions used for motor control based on the AI detections
+
+def set_motor(motor, speed):
+    print(f"Motor {motor} set to speed {speed}")
+
+# Initialised speed
+
+def traffic_sign_identification():
+    return int(input("Enter detected traffic sign ID (1-5): "))
+
+# Simulate AI vision detection - each sign represents a number from 1 to 5
+
+def set_buzzer(state):
+    print(f"Buzzer {'ON' if state else 'OFF'}")
+
+# Main iteration
+
+while True:
+    set_motor("M1", 50)
+    set_motor("M2", 50)
+
+    X = traffic_sign_identification()
+
+    # Program to accelerate vehicle in case of 'foward arrow' sign
+
+    if X == 1:
+        set_motor("M1", 100)
+        set_motor("M2", 100)
+        time.sleep(0.5)
+        set_motor("M1", 0)
+        set_motor("M2", 0)
+
+    # Program to drive in reverse in case of 'downward arrow' sign
+
+    elif X == 2:
+        set_motor("M1", -50)
+        set_motor("M2", -50)
+        time.sleep(0.5)
+        set_motor("M1", 0)
+        set_motor("M2", 0)
+
+    # Program to drive right/left in case of 'right/left arrow' sign
+
+    elif X == 3:
+        set_motor("M1", 0)
+        set_motor("M2", 30)
+        time.sleep(1.5)
+        set_motor("M1", 50)
+        set_motor("M2", 50)
+
+    # Program to drive left/right in case of 'left/right arrow' sign
+
+    elif X == 4:
+        set_motor("M1", 30)
+        set_motor("M2", 0)
+        time.sleep(1.5)
+        set_motor("M1", 50)
+        set_motor("M2", 50)
+
+    # Program to stop and buzz for 1 second if 'stop' sign is detected
+
+    elif X == 5:
+        set_motor("M1", 0)
+        set_motor("M2", 0)
+        set_buzzer(True)
+        time.sleep(1)
+        set_buzzer(False)
